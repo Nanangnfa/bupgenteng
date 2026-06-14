@@ -2229,9 +2229,3 @@ section,
   border: none;
   transition: none;
 }
-
-.btn-wa-custom:hover {
-  background: #198754;
-  color: #fff;
-  text-decoration: none;
-}
