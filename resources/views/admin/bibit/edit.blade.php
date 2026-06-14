@@ -51,6 +51,25 @@
         </div>
 
         <div class="col-md-6">
+          <label class="form-label">Harga</label>
+          <input type="number" min="0"
+            name="harga"
+            class="form-control"
+            value="{{ old('harga', $bibit->harga) }}"
+            min="0"
+            step="1">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Ukuran</label>
+          <input type="text"
+            name="ukuran"
+            class="form-control"
+            value="{{ old('ukuran', $bibit->ukuran) }}"
+            placeholder="Contoh: 5-7 cm">
+        </div>
+
+        <div class="col-md-6">
           <label class="form-label">Tanggal Tebar</label>
           <input type="date"
             name="tanggal_tebar"
@@ -60,7 +79,7 @@
 
         <div class="col-md-6">
           <label class="form-label">Jumlah Awal</label>
-          <input type="number"
+          <input type="number" min="0"
             name="jumlah_awal"
             class="form-control"
             value="{{ old('jumlah_awal', $bibit->jumlah_awal) }}">
@@ -68,7 +87,7 @@
 
         <div class="col-md-6">
           <label class="form-label">Stok Sekarang</label>
-          <input type="number"
+          <input type="number" min="0"
             name="stok_sekarang"
             class="form-control"
             value="{{ old('stok_sekarang', $bibit->stok_sekarang) }}">

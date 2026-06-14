@@ -45,6 +45,8 @@
           <th>No</th>
           <th>Kode Bibit</th>
           <th>Nama Ikan</th>
+          <th>Harga</th>
+          <th>Ukuran</th>
           <th>Tanggal Tebar</th>
           <th>Jumlah Awal</th>
           <th>Stok Sekarang</th>
@@ -64,6 +66,14 @@
 
           <td>
             {{ $bibit->nama_ikan }}
+          </td>
+
+          <td>
+            {{ $bibit->harga ? 'Rp ' . number_format($bibit->harga, 0, ',', '.') : '-' }}
+          </td>
+
+          <td>
+            {{ $bibit->ukuran ?? '-' }}
           </td>
 
           <td>
@@ -88,12 +98,12 @@
 
           <td class="text-end">
             <a href="{{ route('admin.bibit.edit', $bibit->id) }}"
-              class="btn btn-light btn-sm">
-              Edit
+              class="btn btn-light btn-sm w-100 mb-1">
+              Edit  
             </a>
 
             <button type="button"
-              class="btn btn-danger btn-sm"
+              class="btn btn-danger btn-sm w-100"
               data-bs-toggle="modal"
               data-bs-target="#hapusBibit{{ $bibit->id }}">
               Hapus
@@ -149,7 +159,7 @@
         </div>
         @empty
         <tr>
-          <td colspan="8" class="text-center text-muted">
+          <td colspan="10" class="text-center text-muted">
             Belum ada data bibit.
           </td>
         </tr>

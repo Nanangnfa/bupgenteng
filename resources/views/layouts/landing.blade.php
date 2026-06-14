@@ -91,8 +91,9 @@
             <div class="col-lg-6 text-lg-end text-start">
               <a href="https://wa.me/6285935044462?text=Halo%20Admin%20BUP%20Genteng%2C%20saya%20ingin%20bertanya%20tentang%20bibit%20ikan."
                 target="_blank"
-                class="btn-wa-custom">
-                <i class="bi bi-whatsapp"></i>
+                class="btn-wa-custom"
+                style="user-select: none;">
+                <i class="bi bi-whatsapp disabled"></i>
                 Hubungi Kami
               </a>
             </div>

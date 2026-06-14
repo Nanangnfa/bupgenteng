@@ -85,7 +85,9 @@ $pageTitleBg = asset('template-landing/assets/img/hero_1.jpg');
               @foreach ($bibits as $bibit)
               <option value="{{ $bibit->id }}">
                 {{ $bibit->nama_ikan }}
-                | Stok: {{ $bibit->stok_sekarang }}
+                | Ukuran: {{ $bibit->ukuran ?? '-' }} Cm
+                | Harga: {{ $bibit->harga ? 'Rp ' . number_format($bibit->harga, 0, ',', '.') : '-' }}
+                | Stok: {{ $bibit->stok_sekarang }} 
               </option>
               @endforeach
             </select>
@@ -115,7 +117,7 @@ $pageTitleBg = asset('template-landing/assets/img/hero_1.jpg');
           </div>
 
           <div class="form-group mb-3">
-            <input type="number"
+            <input type="number" min="0"
               name="jumlah_pesan"
               class="form-control"
               placeholder="Jumlah pesan dengan satuan"

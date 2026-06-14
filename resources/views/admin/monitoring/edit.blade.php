@@ -80,7 +80,7 @@
 
         <div class="col-md-6">
           <label class="form-label">Stok Setelah Monitoring</label>
-          <input type="number"
+          <input type="number" min="0"
             name="stok_akhir"
             id="stok_akhir"
             class="form-control bg-light"

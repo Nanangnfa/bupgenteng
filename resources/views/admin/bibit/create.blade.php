@@ -50,6 +50,26 @@
         </div>
 
         <div class="col-md-6">
+          <label class="form-label">Harga</label>
+          <input type="number" min="0"
+            name="harga"
+            class="form-control"
+            value="{{ old('harga') }}"
+            min="0"
+            step="1"
+            placeholder="Contoh: 25000">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Ukuran</label>
+          <input type="text"
+            name="ukuran"
+            class="form-control"
+            value="{{ old('ukuran') }}"
+            placeholder="Contoh: 5-7 cm / 8-10 cm">
+        </div>
+
+        <div class="col-md-6">
           <label class="form-label">Tanggal Tebar</label>
           <input type="date"
             name="tanggal_tebar"
@@ -59,7 +79,7 @@
 
         <div class="col-md-6">
           <label class="form-label">Jumlah Awal</label>
-          <input type="number"
+          <input type="number" min="0"
             name="jumlah_awal"
             id="jumlah_awal"
             class="form-control bg-light"

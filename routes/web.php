@@ -74,12 +74,9 @@ Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->group(function () {
 
-        // dashboard & exports
-        Route::get('/report/create', [DashboardController::class, 'showCreateReportForm'])
-            ->name('report.create');
-
-        Route::get('/report/export', [DashboardController::class, 'exportReport'])
-            ->name('report.export');
+    // dashboard & exports
+    Route::get('/report/create', [DashboardController::class, 'showCreateReportForm'])->name('report.create');
+    Route::get('/report/export', [DashboardController::class, 'exportReport'])->name('report.export');
 
         Route::get('/dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
