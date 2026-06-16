@@ -2229,3 +2229,11 @@ section,
   border: none;
   transition: none;
 }
+
+.btn-wa-custom:hover,
+.btn-wa-custom:focus,
+.btn-wa-custom:active {
+  color: #fff;
+  background: #198754;
+  text-decoration: none;
+}

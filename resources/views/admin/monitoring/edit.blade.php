@@ -43,7 +43,7 @@
 
           <input type="text"
             class="form-control bg-light"
-            value="{{ $bibitAktif->kode_bibit ?? '-' }} - {{ $bibitAktif->nama_ikan ?? '-' }} | Stok: {{ $stokDasar }} Kg"
+            value="{{ $bibitAktif->kode_bibit ?? '-' }} - {{ $bibitAktif->nama_ikan ?? '-' }} | Stok: {{ $stokDasar }}"
             readonly>
 
           <input type="hidden" id="stok_dasar" value="{{ $stokDasar }}">

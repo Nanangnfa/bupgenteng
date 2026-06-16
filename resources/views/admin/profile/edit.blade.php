@@ -26,10 +26,6 @@
           <h2 class="h5 mb-1 section-title">
             <span>Informasi Akun</span>
           </h2>
-
-          <p class="text-muted mb-0">
-            Ubah nama, email, atau password akun admin.
-          </p>
         </div>
       </div>
 

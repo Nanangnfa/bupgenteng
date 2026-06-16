@@ -60,7 +60,7 @@ class LaporanBulananExport implements FromArray, WithColumnWidths, WithEvents, W
     $rows[] = ['Bulan', $this->namaBulan[$this->bulan]];
     $rows[] = ['Tahun', $this->tahun];
     $rows[] = ['Periode', $this->startDate->format('d-m-Y') . ' s/d ' . $this->endDate->format('d-m-Y')];
-    $rows[] = [];
+    $rows[] = array_fill(0, 10, '');
 
     $rows[] = [
       'No',
@@ -133,7 +133,7 @@ class LaporanBulananExport implements FromArray, WithColumnWidths, WithEvents, W
       $totalStokAkhir += $stokAkhir;
     }
 
-    $rows[] = [];
+    $rows[] = array_fill(0, 10, '');
 
     $rows[] = [
       'TOTAL',
@@ -172,38 +172,23 @@ class LaporanBulananExport implements FromArray, WithColumnWidths, WithEvents, W
     return [
       AfterSheet::class => function (AfterSheet $event) {
         $sheet = $event->sheet->getDelegate();
+
+        $headerRow = 6;
+        $dataStartRow = 7;
         $highestRow = $sheet->getHighestRow();
+
+        /*
+            |--------------------------------------------------------------------------
+            | Judul
+            |--------------------------------------------------------------------------
+            */
 
         $sheet->mergeCells('A1:J1');
 
-        $sheet->getStyle('A1')->applyFromArray([
+        $sheet->getStyle('A1:J1')->applyFromArray([
           'font' => [
             'bold' => true,
             'size' => 14,
-          ],
-          'alignment' => [
-            'horizontal' => Alignment::HORIZONTAL_CENTER,
-          ],
-        ]);
-
-        $sheet->getStyle('A2:B4')->applyFromArray([
-          'font' => [
-            'bold' => true,
-          ],
-        ]);
-
-        $sheet->getStyle('A6:J6')->applyFromArray([
-          'font' => [
-            'bold' => true,
-            'color' => [
-              'rgb' => 'FFFFFF',
-            ],
-          ],
-          'fill' => [
-            'fillType' => Fill::FILL_SOLID,
-            'startColor' => [
-              'rgb' => '1F4E79',
-            ],
           ],
           'alignment' => [
             'horizontal' => Alignment::HORIZONTAL_CENTER,
@@ -211,7 +196,66 @@ class LaporanBulananExport implements FromArray, WithColumnWidths, WithEvents, W
           ],
         ]);
 
-        $sheet->getStyle('A6:J' . $highestRow)->applyFromArray([
+        $sheet->getRowDimension(1)->setRowHeight(25);
+
+        /*
+            |--------------------------------------------------------------------------
+            | Informasi Bulan, Tahun, dan Periode
+            |--------------------------------------------------------------------------
+            */
+
+        $sheet->getStyle('A2:A4')->applyFromArray([
+          'font' => [
+            'bold' => true,
+          ],
+        ]);
+
+        /*
+            |--------------------------------------------------------------------------
+            | Header Tabel
+            |--------------------------------------------------------------------------
+            */
+
+        $sheet->getStyle("A{$headerRow}:J{$headerRow}")
+          ->applyFromArray([
+            'font' => [
+              'bold' => true,
+              'color' => [
+                'rgb' => 'FFFFFF',
+              ],
+            ],
+            'fill' => [
+              'fillType' => Fill::FILL_SOLID,
+              'startColor' => [
+                'rgb' => '1F4E79',
+              ],
+            ],
+            'alignment' => [
+              'horizontal' => Alignment::HORIZONTAL_CENTER,
+              'vertical' => Alignment::VERTICAL_CENTER,
+              'wrapText' => true,
+            ],
+            'borders' => [
+              'allBorders' => [
+                'borderStyle' => Border::BORDER_THIN,
+                'color' => [
+                  'rgb' => '000000',
+                ],
+              ],
+            ],
+          ]);
+
+        $sheet->getRowDimension($headerRow)->setRowHeight(35);
+
+        /*
+            |--------------------------------------------------------------------------
+            | Border Isi Tabel
+            |--------------------------------------------------------------------------
+            */
+
+        $sheet->getStyle(
+          "A{$dataStartRow}:J{$highestRow}"
+        )->applyFromArray([
           'borders' => [
             'allBorders' => [
               'borderStyle' => Border::BORDER_THIN,
@@ -220,46 +264,82 @@ class LaporanBulananExport implements FromArray, WithColumnWidths, WithEvents, W
               ],
             ],
           ],
+          'alignment' => [
+            'vertical' => Alignment::VERTICAL_CENTER,
+          ],
         ]);
 
-        $sheet->getStyle('A7:A' . $highestRow)
+        /*
+            |--------------------------------------------------------------------------
+            | Alignment
+            |--------------------------------------------------------------------------
+            */
+
+        $sheet->getStyle("A{$dataStartRow}:A{$highestRow}")
           ->getAlignment()
           ->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-        $sheet->getStyle('E7:E' . $highestRow)
-          ->getNumberFormat()
-          ->setFormatCode('"Rp" #,##0');
-
-        $sheet->getStyle('F7:I' . $highestRow)
-          ->getNumberFormat()
-          ->setFormatCode('#,##0');
-
-        $sheet->getStyle('A' . $highestRow . ':J' . $highestRow)->applyFromArray([
-          'font' => [
-            'bold' => true,
-          ],
-          'fill' => [
-            'fillType' => Fill::FILL_SOLID,
-            'startColor' => [
-              'rgb' => 'D9EAF7',
-            ],
-          ],
-        ]);
-
-        $sheet->getStyle('A1:J' . $highestRow)
+        $sheet->getStyle("D{$dataStartRow}:D{$highestRow}")
           ->getAlignment()
-          ->setVertical(Alignment::VERTICAL_CENTER);
+          ->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-        $sheet->getStyle('B7:J' . $highestRow)
+        $sheet->getStyle("F{$dataStartRow}:I{$highestRow}")
+          ->getAlignment()
+          ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle("B{$dataStartRow}:J{$highestRow}")
           ->getAlignment()
           ->setWrapText(true);
 
-        $sheet->freezePane('A7');
+        /*
+            |--------------------------------------------------------------------------
+            | Format Harga dan Angka
+            |--------------------------------------------------------------------------
+            */
+
+        $sheet->getStyle("E{$dataStartRow}:E{$highestRow}")
+          ->getNumberFormat()
+          ->setFormatCode('"Rp" #,##0');
+
+        $sheet->getStyle("F{$dataStartRow}:I{$highestRow}")
+          ->getNumberFormat()
+          ->setFormatCode('#,##0');
+
+        /*
+            |--------------------------------------------------------------------------
+            | Baris Total
+            |--------------------------------------------------------------------------
+            */
+
+        $sheet->getStyle("A{$highestRow}:J{$highestRow}")
+          ->applyFromArray([
+            'font' => [
+              'bold' => true,
+            ],
+            'fill' => [
+              'fillType' => Fill::FILL_SOLID,
+              'startColor' => [
+                'rgb' => 'D9EAF7',
+              ],
+            ],
+          ]);
+
+        /*
+            |--------------------------------------------------------------------------
+            | Freeze dan Print
+            |--------------------------------------------------------------------------
+            */
+
+        $sheet->freezePane("A{$dataStartRow}");
 
         $sheet->getPageSetup()
           ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
 
-        $sheet->getPageSetup()->setFitToWidth(1);
+        $sheet->getPageSetup()
+          ->setFitToWidth(1);
+
+        $sheet->getPageSetup()
+          ->setFitToHeight(0);
       },
     ];
   }

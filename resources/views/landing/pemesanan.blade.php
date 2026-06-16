@@ -80,14 +80,15 @@ $pageTitleBg = asset('template-landing/assets/img/hero_1.jpg');
 
           <div class="form-group mb-3">
             <select name="bibit_id" class="form-control" required>
-              <option value="">-- Pilih Bibit Ikan --</option>
+              <option value="">Pilih Bibit Ikan</option>
 
               @foreach ($bibits as $bibit)
-              <option value="{{ $bibit->id }}">
+              <option value="{{ $bibit->id }}"
+              class="fw-bold">
                 {{ $bibit->nama_ikan }}
                 | Ukuran: {{ $bibit->ukuran ?? '-' }} Cm
-                | Harga: {{ $bibit->harga ? 'Rp ' . number_format($bibit->harga, 0, ',', '.') : '-' }}
-                | Stok: {{ $bibit->stok_sekarang }} 
+                | Harga: {{ $bibit->harga ? 'Rp ' . number_format($bibit->harga, 0, ',', '.') : '-' }} Per-Ekor
+                | Stok Tersedia : {{ $bibit->stok_sekarang }} Ekor
               </option>
               @endforeach
             </select>

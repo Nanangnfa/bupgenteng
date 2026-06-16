@@ -38,7 +38,7 @@
               data-stok="{{ $bibit->stok_sekarang }}"
               {{ old('bibit_id') == $bibit->id ? 'selected' : '' }}>
               {{ $bibit->kode_bibit }} - {{ $bibit->nama_ikan }}
-              | Stok: {{ $bibit->stok_sekarang }} Kg
+              | Stok: {{ $bibit->stok_sekarang }} 
             </option>
             @endforeach
           </select>
